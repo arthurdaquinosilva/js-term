@@ -17,7 +17,7 @@ Show or change settings for this session: %config, %config name, %config name=va
 
 ### `%theme [name]`
 
-Switch the color theme (void, nebula, matrix); without an argument, list them.
+Switch the color theme (pitch); without an argument, list them.
 
 ### `%xmode [minimal|plain|context|verbose]`
 

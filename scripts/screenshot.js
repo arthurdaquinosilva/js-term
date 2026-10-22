@@ -48,9 +48,9 @@ async function type(text, { enter = true, wait = /╰─ [✓✗]/ } = {}) {
 
 // ── ANSI → SVG ────────────────────────────────────────────────────────────────
 
-const PALETTE16 = ['#1c1c1c', '#ff6b6b', '#7ee2a8', '#f2c14e', '#7cc4ff', '#c9a0ff', '#86c7c0', '#e7e7e7'];
-const BG = '#101012';
-const FG = '#e7e7e7';
+const PALETTE16 = ['#000000', '#f7768e', '#9ece6a', '#e0af68', '#7aa2f7', '#bb9af7', '#7dcfff', '#a9b1d6'];
+const BG = '#000000';
+const FG = '#c0caf5';
 
 function color256(n) {
   if (n < 8) return PALETTE16[n];

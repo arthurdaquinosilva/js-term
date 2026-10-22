@@ -109,7 +109,7 @@ describe('signatures', () => {
   });
 
   test('rendering shrinks to fit', () => {
-    const theme = new Theme('void', 1);
+    const theme = new Theme('pitch', 1);
     const info = { name: 'f', params: ['alpha', 'beta', 'gamma', 'delta', 'epsilon'].map((n) => ({ name: n, def: '"a long default"' })), index: 3, returns: 'string' };
     assert.equal(stripAnsi(renderSignature(info, 200, theme)).includes('= "a long default"'), true);
     const narrow = stripAnsi(renderSignature(info, 40, theme));

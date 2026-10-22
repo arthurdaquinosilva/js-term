@@ -18,7 +18,7 @@ usage:
   cinder file.js [args…]          run a file (-i to stay interactive afterwards)
   cinder -e "code"                run code        cinder -p "expr"   print its value
   cinder -  <  file.js            run code from stdin
-  cinder --profile work --theme nebula --vi --layout box --no-startup
+  cinder --profile work --vi --layout box --no-startup
 
 options:
   -e, --eval CODE      run code and exit

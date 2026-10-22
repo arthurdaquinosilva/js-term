@@ -12,6 +12,7 @@ import { runs, styleMap } from './highlight.js';
 import { KeyDecoder, keyName } from './keys.js';
 import { matchBracket } from './lexer.js';
 import { renderSignature, signatureAt } from './signature.js';
+import { DEFAULT_THEME } from './theme.js';
 import { ExitRequest } from './shell.js';
 import { Vi } from './vi.js';
 import { charWidth, formatDuration, shortPath, truncate, truncateAnsi, width as textWidth } from './text.js';
@@ -1026,7 +1027,7 @@ export class Repl {
     if (sh.lastDuration !== null) {
       parts.push((sh.lastOk ? t.paint('ok', '✓ ') : t.paint('err', '✗ ')) + t.paint('status', formatDuration(sh.lastDuration)));
     }
-    if (sh.theme.name !== 'void') parts.push(t.paint('status.dim', sh.theme.name));
+    if (sh.theme.name !== DEFAULT_THEME) parts.push(t.paint('status.dim', sh.theme.name));
     if (sh.settings.autoreload) parts.push(t.paint('status.dim', 'autoreload'));
     return parts.join(sep);
   }

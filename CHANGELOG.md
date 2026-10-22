@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **pitch**, one palette shared by ember, shtick, cinder, flare and lore: cool blue/violet hues on the terminal's own black. Backgrounds stay transparent, completion menus included (the current item is bold instead of shaded). cinder's accent is red, and the `CINDER.JS` wordmark follows it. The `void`, `nebula` and `matrix` themes are gone; a config that still names one falls back to pitch with a warning.
+
 ## 0.2.0
 
 - **Rule layout** (new default), in querky's style: the input between two horizontal rules and a one-line footer — `-- INSERT --` in vi mode or `? for shortcuts` on the left (the signature of the call you're typing replaces it), `In [N]` and the environment on the right. `?` on an empty prompt lists the shortcuts. Completions are a plain list under the prompt. Cell output hangs under a `⎿` marker, five columns in, with the status line last, and the spinner reads `✻ Running… (2s · ctrl+c to interrupt)`. `--layout block` / `--layout box` (or `%layout`) bring back the previous looks.

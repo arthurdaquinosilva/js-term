@@ -18,7 +18,7 @@ Every setting is optional. This example shows each one with its default (`//` co
 
 ```jsonc
 {
-  "theme": "void",            // void · nebula · matrix
+  "theme": "pitch",           // the only theme for now
   "layout": "rule",           // rule (input between two rules) · block (full-width input bar) · box (rounded box)
   "typescript": "auto",       // auto (when a cell isn't JavaScript) · always · off
   "editingMode": "emacs",     // emacs · vi
@@ -45,16 +45,12 @@ Unknown or invalid keys are reported as a warning when cinder starts; they never
 %config                 // every setting and its value
 %config xmode           // show one
 %config xmode=verbose   // change it for this session
-%theme nebula           // shortcuts: %theme, %layout, %editmode, %xmode, %depth, %precision, %automagic, %autoreload
+%layout box             // shortcuts: %theme, %layout, %editmode, %xmode, %depth, %precision, %automagic, %autoreload
 ```
 
 ## Themes
 
-Three palettes, shared by the input bar, the cell chrome, syntax highlighting and printed values:
-
-- **void** — near-black monochrome with a single warm accent (the default)
-- **nebula** — violet and cyan
-- **matrix** — greens
+One palette, **pitch**, shared by the input bar, the cell chrome, syntax highlighting and printed values: cool blue/violet hues on a pitch-black terminal, the same palette as ember, shtick, flare and lore, with cinder's own red accent. Backgrounds stay transparent, so the terminal's own black shows through.
 
 cinder uses 24-bit color when the terminal supports it and falls back to the nearest 256 colors otherwise. `NO_COLOR` turns colors off.
 
