@@ -1,13 +1,6 @@
 # Releasing
 
-Versions are published to npm by the `release` workflow when a GitHub release is published. It uses npm's
-trusted publishing (OIDC), so no npm token is stored in GitHub, and the package gets a provenance statement.
-
-## One-time setup
-
-1. Create the package on npm with a first manual publish (`npm publish --access public` from a clean checkout), or reserve the name.
-2. On npmjs.com, open the package → **Settings** → **Trusted publishing** and add a GitHub Actions publisher: repository `arthurdaquinosilva/cinder`, workflow `release.yml`, environment `npm`.
-3. In the GitHub repository, create an environment named `npm` (Settings → Environments). Add required reviewers if you want a manual approval step.
+cinder is published only on GitHub — it isn't on npm. People install it with `install.sh`, which downloads the source archive of a branch or tag from GitHub and runs `npm ci --omit=dev` in it.
 
 ## Each release
 
@@ -16,7 +9,14 @@ trusted publishing (OIDC), so no npm token is stored in GitHub, and the package 
    ```sh
    npm test
    npm run docs:check
-   npm pack --dry-run      # look over the file list
    ```
 3. Commit, tag and push: `git tag v0.1.0 && git push --tags`.
-4. Create a GitHub release from the tag. The workflow runs the tests, then publishes to npm.
+4. Create a GitHub release from the tag.
+
+The tag is what `install.sh` installs when asked for it:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/install.sh | CINDER_VERSION=v0.1.0 sh
+```
+
+`install.sh` is served straight from `main` and installs `main` unless `CINDER_VERSION` is set, so it needs no change per release.

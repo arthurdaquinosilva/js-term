@@ -7,7 +7,7 @@
 **A modern, beautiful interactive JavaScript and TypeScript shell for Node.**
 Node's REPL, rebuilt around a calm terminal UI — with IPython-style magics, history, timing and live help.
 
-[![npm](https://img.shields.io/npm/v/cinder-shell)](https://www.npmjs.com/package/cinder-shell)
+[![release](https://img.shields.io/github/v/tag/arthurdaquinosilva/cinder?label=release)](https://github.com/arthurdaquinosilva/cinder/tags)
 [![tests](https://github.com/arthurdaquinosilva/cinder/actions/workflows/tests.yml/badge.svg)](https://github.com/arthurdaquinosilva/cinder/actions/workflows/tests.yml)
 [![node](https://img.shields.io/badge/node-20.12%20%7C%2022%20%7C%2024-blue)](https://github.com/arthurdaquinosilva/cinder/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/arthurdaquinosilva/cinder/blob/main/LICENSE)
@@ -43,11 +43,9 @@ That downloads cinder from GitHub into `~/.local/lib/cinder` and links the `cind
 ```sh
 curl -fsSL .../install.sh | CINDER_VERSION=v0.1.0 sh      # a specific tag or branch
 curl -fsSL .../install.sh | sh -s -- --uninstall          # remove it (history and config are kept)
-npm install -g cinder-shell                               # or from npm
-npx cinder-shell                                          # or try it without installing
 ```
 
-The package is `cinder-shell` on npm; the command is `cinder`. Requires Node 20.12 or newer on macOS or Linux; TypeScript needs Node 22.13+ (22.15+ to import `.ts` files), or the `typescript` package in your project.
+cinder isn't on npm; GitHub is the only place it's published. Requires Node 20.12 or newer on macOS or Linux; TypeScript needs Node 22.13+ (22.15+ to import `.ts` files), or the `typescript` package in your project.
 
 > **Tip:** `require()` and `import` resolve from the directory you're in, so run cinder inside a project to use its packages (`%npm install lodash` works too).
 
@@ -87,7 +85,7 @@ Shift+Enter needs a terminal that reports modified keys (iTerm2, WezTerm, Ghostt
 | [Features](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/features.md) | The interface, input syntax, how cells run, display, errors and debugging, history, shell, completion |
 | [Magic reference](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/magics.md) | All magics with options (generated from the code) |
 | [Configuration](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/configuration.md) | `config.json`, themes, profiles, startup files, command-line options |
-| [Releasing](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/releasing.md) | How versions are published to npm |
+| [Releasing](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/releasing.md) | How versions are tagged and released on GitHub |
 
 ## Command line
 
