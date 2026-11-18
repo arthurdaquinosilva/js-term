@@ -41,7 +41,7 @@ curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/inst
 That downloads cinder from GitHub into `~/.local/lib/cinder` and links the `cinder` command in `~/.local/bin`. It runs on whichever `node` is on your PATH, so switching Node versions with nvm keeps it available. To update, run the installer again. Other options:
 
 ```sh
-curl -fsSL .../install.sh | CINDER_VERSION=v0.1.0 sh      # a specific tag or branch
+curl -fsSL .../install.sh | CINDER_VERSION=v0.2.0 sh      # a specific tag or branch
 curl -fsSL .../install.sh | sh -s -- --uninstall          # remove it (history and config are kept)
 ```
 

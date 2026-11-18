@@ -4,7 +4,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/install.sh | sh
 #
 # Environment overrides:
-#   CINDER_VERSION   branch or tag to install (default: main), e.g. CINDER_VERSION=v0.1.0
+#   CINDER_VERSION   branch or tag to install (default: main), e.g. CINDER_VERSION=v0.2.0
 #   CINDER_HOME      where the source lives   (default: ~/.local/lib/cinder)
 #   CINDER_BIN_DIR   where the command goes   (default: ~/.local/bin)
 #
