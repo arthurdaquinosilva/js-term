@@ -13,8 +13,8 @@ export function functionLocation(fn) {
     session.connect();
     session.on('Debugger.scriptParsed', ({ params }) => scripts.set(params.scriptId, params.url));
     session.post('Debugger.enable');
-    globalThis.__cinder_locate__ = fn;
-    session.post('Runtime.evaluate', { expression: '__cinder_locate__' }, (err, res) => {
+    globalThis.__js_term_locate__ = fn;
+    session.post('Runtime.evaluate', { expression: '__js_term_locate__' }, (err, res) => {
       if (err || !res?.result?.objectId) return;
       session.post('Runtime.getProperties', { objectId: res.result.objectId, ownProperties: true }, (err2, props) => {
         const loc = props?.internalProperties?.find((p) => p.name === '[[FunctionLocation]]')?.value?.value;
@@ -25,7 +25,7 @@ export function functionLocation(fn) {
   } catch {
     return null;
   } finally {
-    delete globalThis.__cinder_locate__;
+    delete globalThis.__js_term_locate__;
     session.disconnect();
   }
   if (!location) return null;

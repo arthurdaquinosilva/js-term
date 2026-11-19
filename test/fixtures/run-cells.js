@@ -18,4 +18,4 @@ for (const cell of cells) {
 }
 fs.writeSync(3, JSON.stringify(results));
 shell.close();
-(process.exit.__cinder ?? process.exit)(0);
+(process.exit.__js_term ?? process.exit)(0);

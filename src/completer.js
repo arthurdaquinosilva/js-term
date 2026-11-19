@@ -209,7 +209,7 @@ export function complete(text, cursor, shell) {
   // a plain name: your variables, then globals, keywords
   const userNames = new Set(Object.keys(shell?.userVars?.() ?? {}));
   const globals = Object.getOwnPropertyNames(globalThis)
-    .filter((n) => !/^_i?\d+$/.test(n) && n !== '__cinder__')
+    .filter((n) => !/^_i?\d+$/.test(n) && n !== '__js_term__')
     .map((n) => {
       const [kind, meta] = metaFor(globalThis, n);
       return { ...item(n, kind, meta), user: userNames.has(n) };

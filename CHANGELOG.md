@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- **pitch**, one palette shared by ember, shtick, cinder, flare and lore: cool blue/violet hues on the terminal's own black. Backgrounds stay transparent, completion menus included (the current item is bold instead of shaded). cinder's accent is red, and the `CINDER.JS` wordmark follows it. The `void`, `nebula` and `matrix` themes are gone; a config that still names one falls back to pitch with a warning.
+- **Renamed: cinder is now `:js`** (repository and package `js-term`). The command is `:js`, with `js-term` as a plain alias for scripts and Makefiles. History and settings move from `~/.config/cinder` and `~/.local/share/cinder` to `js-term` folders automatically on first start (the old folders are kept), and the installer removes the old cinder installation. Environment variables are now `JS_TERM_*` instead of `CINDER_*`, the entry script is `bin/js-term.js`, and the start screen reads `:JS`.
+- **pitch**, one palette shared by `:py`, `:sh`, `:js`, `:http` and `:docs`: cool blue/violet hues on the terminal's own black. Backgrounds stay transparent, completion menus included (the current item is bold instead of shaded). `:js`'s accent is red, and the `CINDER.JS` wordmark follows it. The `void`, `nebula` and `matrix` themes are gone; a config that still names one falls back to pitch with a warning.
 
 ## 0.2.0
 

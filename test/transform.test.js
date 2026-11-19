@@ -53,7 +53,7 @@ describe('rewrite', () => {
   });
 
   test('import.meta is rewritten only for files run with %run', () => {
-    assert.match(rewrite('import.meta.url', { meta: {} }).code, /__cinder__\.meta\.url/);
+    assert.match(rewrite('import.meta.url', { meta: {} }).code, /__js_term__\.meta\.url/);
   });
 
   test('syntax errors come from acorn with a location', () => {

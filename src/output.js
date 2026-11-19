@@ -7,7 +7,7 @@ import { S, SIZE } from './spinner-state.js';
 
 const SPLIT = /(\r\n|\n|\r)/;
 export const REST = '     '; // the rule layout indents output five columns, under a `  ⎿  ` on the first line
-export const STAR_FRAMES = ['·', '✢', '✳', '✶', '✻', '✽', '✻', '✶', '✳', '✢']; // the rule layout's spinner, as in querky
+export const STAR_FRAMES = ['·', '✢', '✳', '✶', '✻', '✽', '✻', '✶', '✳', '✢']; // the rule layout's spinner, as in :sql
 
 export class Spinner {
   constructor(fd, look) {

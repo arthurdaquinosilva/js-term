@@ -1,28 +1,28 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/docs/assets/cover.svg?sanitize=true" alt="cinder's start screen: the pixel CINDER.JS wordmark, version and environment info, the input bar and the key bar" width="900">
+<img src="https://raw.githubusercontent.com/arthurdaquinosilva/js-term/main/docs/assets/cover.svg?sanitize=true" alt=":js's start screen: the pixel :JS.JS wordmark, version and environment info, the input bar and the key bar" width="900">
 
-# ✦ cinder
+# ✦ :js
 
 **A modern, beautiful interactive JavaScript and TypeScript shell for Node.**
 Node's REPL, rebuilt around a calm terminal UI — with IPython-style magics, history, timing and live help.
 
-[![release](https://img.shields.io/github/v/tag/arthurdaquinosilva/cinder?label=release)](https://github.com/arthurdaquinosilva/cinder/tags)
-[![tests](https://github.com/arthurdaquinosilva/cinder/actions/workflows/tests.yml/badge.svg)](https://github.com/arthurdaquinosilva/cinder/actions/workflows/tests.yml)
-[![node](https://img.shields.io/badge/node-20.12%20%7C%2022%20%7C%2024-blue)](https://github.com/arthurdaquinosilva/cinder/blob/main/package.json)
-[![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/arthurdaquinosilva/cinder/blob/main/LICENSE)
+[![release](https://img.shields.io/github/v/tag/arthurdaquinosilva/js-term?label=release)](https://github.com/arthurdaquinosilva/js-term/tags)
+[![tests](https://github.com/arthurdaquinosilva/js-term/actions/workflows/tests.yml/badge.svg)](https://github.com/arthurdaquinosilva/js-term/actions/workflows/tests.yml)
+[![node](https://img.shields.io/badge/node-20.12%20%7C%2022%20%7C%2024-blue)](https://github.com/arthurdaquinosilva/js-term/blob/main/package.json)
+[![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/arthurdaquinosilva/js-term/blob/main/LICENSE)
 
 </div>
 
 ## See it in action
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/docs/assets/demo.svg?sanitize=true" alt="cinder running in a terminal: cells with results and timing, an import, %timeit, and a signature hint while typing a call" width="820">
+<img src="https://raw.githubusercontent.com/arthurdaquinosilva/js-term/main/docs/assets/demo.svg?sanitize=true" alt=":js running in a terminal: cells with results and timing, an import, %timeit, and a signature hint while typing a call" width="820">
 </p>
 
-cinder is the JavaScript sibling of [ember](https://github.com/arthurdaquinosilva/ember), the Python shell — same look, same keys, same habits.
+:js is the JavaScript sibling of [:py](https://github.com/arthurdaquinosilva/py-term), the Python shell — same look, same keys, same habits.
 
-## Why cinder
+## Why :js
 
 - **Readable sessions.** Every cell is a block: your code, its output on a rail, and a footer with status, time, result type and `Out[N]`.
 - **Help while you type.** Completions from your live objects with type icons, and signatures for the call under the cursor — `ƒ greet(name, times: number = 1)` — with types from JSDoc, defaults and the values you're passing.
@@ -35,19 +35,19 @@ cinder is the JavaScript sibling of [ember](https://github.com/arthurdaquinosilv
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/js-term/main/install.sh | sh
 ```
 
-That downloads cinder from GitHub into `~/.local/lib/cinder` and links the `cinder` command in `~/.local/bin`. It runs on whichever `node` is on your PATH, so switching Node versions with nvm keeps it available. To update, run the installer again. Other options:
+That downloads :js from GitHub into `~/.local/lib/js-term` and links the `:js` command in `~/.local/bin`. It runs on whichever `node` is on your PATH, so switching Node versions with nvm keeps it available. To update, run the installer again. Other options:
 
 ```sh
-curl -fsSL .../install.sh | CINDER_VERSION=v0.2.0 sh      # a specific tag or branch
+curl -fsSL .../install.sh | JS_TERM_VERSION=v0.2.0 sh      # a specific tag or branch
 curl -fsSL .../install.sh | sh -s -- --uninstall          # remove it (history and config are kept)
 ```
 
-cinder isn't on npm; GitHub is the only place it's published. Requires Node 20.12 or newer on macOS or Linux; TypeScript needs Node 22.13+ (22.15+ to import `.ts` files), or the `typescript` package in your project.
+:js isn't on npm; GitHub is the only place it's published. Requires Node 20.12 or newer on macOS or Linux; TypeScript needs Node 22.13+ (22.15+ to import `.ts` files), or the `typescript` package in your project.
 
-> **Tip:** `require()` and `import` resolve from the directory you're in, so run cinder inside a project to use its packages (`%npm install lodash` works too).
+> **Tip:** `require()` and `import` resolve from the directory you're in, so run :js inside a project to use its packages (`%npm install lodash` works too).
 
 ## Quick tour
 
@@ -82,19 +82,19 @@ Shift+Enter needs a terminal that reports modified keys (iTerm2, WezTerm, Ghostt
 
 | Guide | What's inside |
 | --- | --- |
-| [Features](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/features.md) | The interface, input syntax, how cells run, display, errors and debugging, history, shell, completion |
-| [Magic reference](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/magics.md) | All magics with options (generated from the code) |
-| [Configuration](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/configuration.md) | `config.json`, themes, profiles, startup files, command-line options |
-| [Releasing](https://github.com/arthurdaquinosilva/cinder/blob/main/docs/releasing.md) | How versions are tagged and released on GitHub |
+| [Features](https://github.com/arthurdaquinosilva/js-term/blob/main/docs/features.md) | The interface, input syntax, how cells run, display, errors and debugging, history, shell, completion |
+| [Magic reference](https://github.com/arthurdaquinosilva/js-term/blob/main/docs/magics.md) | All magics with options (generated from the code) |
+| [Configuration](https://github.com/arthurdaquinosilva/js-term/blob/main/docs/configuration.md) | `config.json`, themes, profiles, startup files, command-line options |
+| [Releasing](https://github.com/arthurdaquinosilva/js-term/blob/main/docs/releasing.md) | How versions are tagged and released on GitHub |
 
 ## Command line
 
 ```sh
-cinder                        # interactive
-cinder script.js args…        # run a file (-i to stay interactive afterwards)
-cinder -e "code"              # run code · -p "expr" prints its value
-echo 'console.log(6 * 7)' | cinder   # code on stdin
-cinder --profile work --vi --layout box --no-startup
+:js                        # interactive
+:js script.js args…        # run a file (-i to stay interactive afterwards)
+:js -e "code"              # run code · -p "expr" prints its value
+echo 'console.log(6 * 7)' | :js   # code on stdin
+:js --profile work --vi --layout box --no-startup
 ```
 
 ## Limits
@@ -109,12 +109,12 @@ cinder --profile work --vi --layout box --no-startup
 ## Development
 
 ```sh
-git clone https://github.com/arthurdaquinosilva/cinder.git && cd cinder
+git clone https://github.com/arthurdaquinosilva/js-term.git && cd js-term
 npm install
 npm test                          # unit tests + a real-terminal test (uses tmux when installed)
 npm run docs                      # regenerate docs/magics.md
 node scripts/screenshot.js        # re-record docs/assets/*.svg from a real session (needs tmux)
-docker build -t cinder-test .     # run the tests in a clean Linux container
+docker build -t js-term-test .     # run the tests in a clean Linux container
 ```
 
 ## License

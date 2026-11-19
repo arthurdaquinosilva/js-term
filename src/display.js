@@ -190,7 +190,7 @@ function errorExtras(error) {
   return parts.join(' · ');
 }
 
-/** `cell 3` for cells, `[eval]` for other code typed into cinder, a short path for files. */
+/** `cell 3` for cells, `[eval]` for other code typed into :js, a short path for files. */
 export function fileLabel(file) {
   const cell = CELL_FILE_RE.exec(file);
   if (cell) return `cell ${cell[1]}`;

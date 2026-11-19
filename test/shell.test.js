@@ -120,7 +120,7 @@ describe('magics', () => {
   });
 
   test('%cd changes directory and require follows', () => {
-    const dir = fs.realpathSync(tmp('cinder-cd-'));
+    const dir = fs.realpathSync(tmp('js-term-cd-'));
     fs.writeFileSync(path.join(dir, 'answer.cjs'), 'module.exports = 42');
     const r = runCells([`%cd ${dir}`, 'process.cwd()', 'require("./answer.cjs")', '%cd -', 'process.cwd()'], { cwd: os.tmpdir() });
     assert.equal(r[1].value, `'${dir}'`);
@@ -129,7 +129,7 @@ describe('magics', () => {
   });
 
   test('%run runs a file in the session, with its own require, argv and import.meta', () => {
-    const dir = tmp('cinder-run-');
+    const dir = tmp('js-term-run-');
     fs.writeFileSync(path.join(dir, 'helper.cjs'), 'module.exports = (x) => x + 1');
     fs.writeFileSync(path.join(dir, 'script.mjs'), 'import inc from "./helper.cjs"\nconst fromScript = inc(1)\nconst args = process.argv.slice(2)\nconst here = import.meta.url\n');
     const r = runCells([`%run ${path.join(dir, 'script.mjs')} one two`, '[fromScript, args, here.endsWith("script.mjs")]']);
@@ -137,7 +137,7 @@ describe('magics', () => {
   });
 
   test('%run keeps process.exit inside the file', () => {
-    const file = path.join(tmp('cinder-exit-'), 'bye.js');
+    const file = path.join(tmp('js-term-exit-'), 'bye.js');
     fs.writeFileSync(file, 'process.exit(0)\n');
     const [r] = runCells([`%run ${file}`]);
     assert.match(r.out, /bye\.js called process\.exit\(0\)/);
@@ -233,7 +233,7 @@ describe('more magics', () => {
   });
 
   test('%autoreload updates code you already required', () => {
-    const dir = fs.realpathSync(tmp('cinder-reload-'));
+    const dir = fs.realpathSync(tmp('js-term-reload-'));
     const file = path.join(dir, 'lib.cjs');
     fs.writeFileSync(file, 'exports.greet = () => "v1"\nexports.Box = class Box { size() { return 1 } }\n');
     const edit = `require("fs").writeFileSync(${JSON.stringify(file)}, 'exports.greet = () => "v2"\\nexports.Box = class Box { size() { return 2 } }\\n'); require("fs").utimesSync(${JSON.stringify(file)}, new Date(), new Date(Date.now() + 5000))`;
@@ -243,7 +243,7 @@ describe('more magics', () => {
   });
 
   test('%store keeps values and functions across sessions', () => {
-    const home = tmp('cinder-store-');
+    const home = tmp('js-term-store-');
     const env = { XDG_DATA_HOME: home, XDG_CONFIG_HOME: home };
     runCells(['const saved = new Map([["a", 1]])', 'const twice = (x) => x * 2', '%store saved twice'], { env });
     const r = runCells(['%store -r', '[saved.get("a"), twice(4)]', '%store'], { env });
@@ -253,7 +253,7 @@ describe('more magics', () => {
   });
 
   test('%logstart writes cells (and results with -o) to a file', () => {
-    const dir = tmp('cinder-log-');
+    const dir = tmp('js-term-log-');
     runCells(['%logstart -o session.js', '6 * 7', '%logstop', 'const notLogged = 1'], { cwd: dir });
     const log = fs.readFileSync(path.join(dir, 'session.js'), 'utf8');
     assert.match(log, /6 \* 7\n\/\/> 42\n/);

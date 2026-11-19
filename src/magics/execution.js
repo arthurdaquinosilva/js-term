@@ -82,7 +82,7 @@ async function timeit(shell, code, { number, repeat = 7, setup = '', quiet = fal
   if (setup.trim()) await shell.runJS(setup, '[%timeit setup]');
   const isAsync = isAsyncCode(code);
   const fn = vm.runInThisContext(`(${isAsync ? 'async ' : ''}function timeit() {\n${code}\n})`, { filename: '[%timeit]' });
-  globalThis.__cinder_timeit__ = fn;
+  globalThis.__js_term_timeit__ = fn;
   let loop;
   if (isAsync) {
     loop = async (n) => {
@@ -92,9 +92,9 @@ async function timeit(shell, code, { number, repeat = 7, setup = '', quiet = fal
     };
   } else {
     // The loop runs as a vm script so Ctrl+C can interrupt it.
-    const script = new vm.Script('(() => { const f = __cinder_timeit__, n = __cinder_timeit_n__, t0 = process.hrtime.bigint(); for (let i = 0; i < n; i++) f(); return Number(process.hrtime.bigint() - t0) / 1e9; })()');
+    const script = new vm.Script('(() => { const f = __js_term_timeit__, n = __js_term_timeit_n__, t0 = process.hrtime.bigint(); for (let i = 0; i < n; i++) f(); return Number(process.hrtime.bigint() - t0) / 1e9; })()');
     loop = async (n) => {
-      globalThis.__cinder_timeit_n__ = n;
+      globalThis.__js_term_timeit_n__ = n;
       return script.runInThisContext({ breakOnSigint: true });
     };
   }
@@ -128,8 +128,8 @@ async function timeit(shell, code, { number, repeat = 7, setup = '', quiet = fal
     }
     return result;
   } finally {
-    delete globalThis.__cinder_timeit__;
-    delete globalThis.__cinder_timeit_n__;
+    delete globalThis.__js_term_timeit__;
+    delete globalThis.__js_term_timeit_n__;
   }
 }
 
@@ -260,7 +260,7 @@ lineMagic(['edit', 'ed'], {
     file = path.resolve(rest[0]);
     if (!fs.existsSync(file)) fs.writeFileSync(file, '');
   } else {
-    file = path.join(os.tmpdir(), `cinder-edit-${process.pid}-${shell.count}.js`);
+    file = path.join(os.tmpdir(), `js-term-edit-${process.pid}-${shell.count}.js`);
     fs.writeFileSync(file, shell.In[shell.count - 1] ?? '');
   }
   openEditor(shell, file);
@@ -328,7 +328,7 @@ async function profile(shell, code, limit = 15) {
   for (const node of prof.nodes) {
     const f = node.callFrame;
     if (['(idle)', '(program)', '(root)'].includes(f.functionName)) continue;
-    if (f.url.startsWith(ROOT)) continue; // cinder's own work (parsing the cell)
+    if (f.url.startsWith(ROOT)) continue; // :js's own work (parsing the cell)
     const url = decodeURIComponent(f.url);
     const where = url ? `${shortPath(url.replace(/^file:\/\//, ''))}:${f.lineNumber + 1}` : '';
     const key = `${f.functionName || '(anonymous)'}\u0000${where}`;

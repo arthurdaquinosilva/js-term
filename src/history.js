@@ -1,4 +1,4 @@
-// Input history grouped by session, kept as JSON lines so several cinder windows can append at once.
+// Input history grouped by session, kept as JSON lines so several :js windows can append at once.
 // Record shapes: {"session": id, "start": iso, "cwd": dir} and {"s": id, "n": line, "src": source, "out"?: text}.
 
 import fs from 'node:fs';

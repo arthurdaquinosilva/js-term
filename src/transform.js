@@ -6,7 +6,7 @@ import * as walk from 'acorn-walk';
 import { inLiteral, tokenize } from './lexer.js';
 import { compile as compileTypeScript, typeScriptMode } from './typescript.js';
 
-export const API = '__cinder__';
+export const API = '__js_term__';
 
 // ── pasted prompts ──────────────────────────────────────────────────────────
 
@@ -277,7 +277,7 @@ function importReplacement(node) {
  * an async function; their declarations are hoisted to globals and turned into assignments, and the last
  * expression is returned. Line numbers never change; `col1` is how far line 1 moved right.
  *
- * With `meta`, `import.meta` reads `__cinder__.meta` (files run with %run).
+ * With `meta`, `import.meta` reads `__js_term__.meta` (files run with %run).
  *
  * Returns {code, async, shows, names, col1}. Throws acorn's SyntaxError for invalid code.
  */

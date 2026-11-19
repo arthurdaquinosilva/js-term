@@ -4,7 +4,7 @@ import util from 'node:util';
 
 export const PALETTES = {
   // pitch: cool blue/violet hues on a pitch-black terminal, shared by all the tools;
-  // each one gets its own accent (cinder's is red), which also colors the name.
+  // each one gets its own accent (:js's is red), which also colors the name.
   pitch: {
     fg: '#c0caf5', muted: '#737aa2', faint: '#565f89', border: '#2a2e42', surface: '#0b0d14',
     selection: '#161925', bar: '#161925', label: '#bb9af7', accent: '#f7768e', accent2: '#ff9e64',
@@ -69,7 +69,7 @@ function rgbTo256([r, g, b]) {
 export function colorDepth(stream = process.stdout) {
   if ('NO_COLOR' in process.env && process.env.NO_COLOR !== '') return 1;
   if (process.env.FORCE_COLOR === '0') return 1;
-  if (process.env.FORCE_COLOR || process.env.CINDER_FORCE_COLOR) return 24;
+  if (process.env.FORCE_COLOR || process.env.JS_TERM_FORCE_COLOR) return 24;
   if (!stream.isTTY) return 1;
   const depth = stream.getColorDepth?.() ?? 8;
   return depth >= 24 ? 24 : depth >= 8 ? 8 : depth > 1 ? 8 : 1;
@@ -130,7 +130,7 @@ export class Theme {
       module: 'decorator',
     };
     for (const [kind, key] of Object.entries(map)) {
-      const name = `cinder_${kind}`;
+      const name = `js_term_${kind}`;
       const code = this.depth >= 24 ? `38;2;${hexToRgb(this.p[key]).join(';')}` : `38;5;${rgbTo256(hexToRgb(this.p[key]))}`;
       colors[name] = [code, 39];
       styles[kind] = name;

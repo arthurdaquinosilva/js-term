@@ -77,7 +77,7 @@ lineMagic(['help', 'quickref'], { doc: 'Keys, syntax and every magic; %help name
     out.push(table(shell, groups[key].map((s) => [(s.kind === 'cell' ? '%%' : '%') + s.name, s.doc.split(/(?<=\.)\s/)[0]])));
     out.push('');
   }
-  out.push(p('faint', '  %help name for options · docs: https://github.com/arthurdaquinosilva/cinder'));
+  out.push(p('faint', '  %help name for options · docs: https://github.com/arthurdaquinosilva/js-term'));
   shell.print(out.join('\n'));
 });
 
@@ -159,7 +159,7 @@ lineMagic(['editmode', 'vi'], {
   shell.print(`editing mode: ${shell.settings.editingMode}`);
 });
 
-lineMagic(['layout'], { doc: 'Switch the prompt layout: rule (input between two rules, querky-style), block (full-width input bar) or box (rounded box, like ember\'s classic look).', usage: '[rule|block|box]' }, (shell, args) => {
+lineMagic(['layout'], { doc: 'Switch the prompt layout: rule (input between two rules, :sql-style), block (full-width input bar) or box (rounded box, like :py\'s classic look).', usage: '[rule|block|box]' }, (shell, args) => {
   if (args.trim()) {
     try {
       shell.setSetting('layout', args.trim());
@@ -187,7 +187,7 @@ lineMagic(['clear', 'cls'], { doc: 'Clear the screen (also Ctrl+L).' }, (shell) 
   shell.suppressFooter = true;
 });
 
-lineMagic(['exit', 'quit'], { doc: 'Leave cinder (also Ctrl+D, exit or .exit).', usage: '[code]' }, async (shell, args) => {
+lineMagic(['exit', 'quit'], { doc: 'Leave :js (also Ctrl+D, exit or .exit).', usage: '[code]' }, async (shell, args) => {
   const { ExitRequest } = await import('../shell.js');
   const [code] = splitArgs(args);
   throw new ExitRequest(code ? Number(code) : 0);

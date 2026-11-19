@@ -1,10 +1,11 @@
 {
-  "name": "cinder-shell",
+  "name": "js-term",
   "version": "0.2.0",
   "description": "A modern, beautiful interactive JavaScript and TypeScript shell for Node — magics, history, completion and live signatures in a calm terminal UI.",
   "type": "module",
   "bin": {
-    "cinder": "bin/cinder.js"
+    ":js": "bin/js-term.js",
+    "js-term": "bin/js-term.js"
   },
   "files": [
     "bin",
@@ -35,10 +36,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arthurdaquinosilva/cinder.git"
+    "url": "git+https://github.com/arthurdaquinosilva/js-term.git"
   },
-  "homepage": "https://github.com/arthurdaquinosilva/cinder",
-  "bugs": "https://github.com/arthurdaquinosilva/cinder/issues",
+  "homepage": "https://github.com/arthurdaquinosilva/js-term",
+  "bugs": "https://github.com/arthurdaquinosilva/js-term/issues",
   "dependencies": {
     "acorn": "^8.18.0",
     "acorn-walk": "^8.3.5"

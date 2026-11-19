@@ -10,9 +10,9 @@ import { after, before, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const hasTmux = spawnSync('tmux', ['-V']).status === 0;
-const socket = `cinder-test-${process.pid}`;
+const socket = `js-term-test-${process.pid}`;
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const home = fs.mkdtempSync(path.join(os.tmpdir(), 'cinder-e2e-'));
+const home = fs.mkdtempSync(path.join(os.tmpdir(), 'js-term-e2e-'));
 
 const tmux = (...args) => execFileSync('tmux', ['-L', socket, '-f', '/dev/null', ...args], { encoding: 'utf8' });
 const screen = () => tmux('capture-pane', '-p', '-t', 'e2e');
@@ -46,9 +46,9 @@ before(() => {
   if (!hasTmux) return;
   tmux('new-session', '-d', '-s', 'e2e', '-x', '100', '-y', '40', '-e', `XDG_DATA_HOME=${home}`, '-e', `XDG_CONFIG_HOME=${home}`,
     // `trap : INT` keeps this wrapper shell alive when Ctrl+C reaches it too (there's no job control here)
-    `/bin/sh -c 'trap : INT; cd "${root}" && "${process.execPath}" bin/cinder.js; echo CINDER-EXITED; sleep 30'`);
+    `/bin/sh -c 'trap : INT; cd "${root}" && "${process.execPath}" bin/js-term.js; echo :JS-EXITED; sleep 30'`);
   tmux('set', '-s', 'escape-time', '10');
-  // Shift+Enter needs tmux 3.2+ (extended-keys); the key format option only exists from 3.5, and cinder
+  // Shift+Enter needs tmux 3.2+ (extended-keys); the key format option only exists from 3.5, and :js
   // understands both formats, so it's optional.
   modifiedKeys = trySet('extended-keys', 'on');
   trySet('extended-keys-format', 'csi-u');
@@ -69,7 +69,7 @@ after(() => {
 
 test('an interactive session in a real terminal', { skip: !hasTmux && 'tmux is not installed' }, async () => {
   await waitFor(/Type JavaScript…/);
-  assert.match(screen(), /▀▀▀▀ ▀▀▀ ▀ {3}▀/); // the pixel wordmark
+  assert.match(screen(), /▀▀ {2}▀▀▀ {2}▀▀▀▀/); // the pixel wordmark
   assert.match(screen(), /─{100}\n> Type JavaScript….*\n─{100}\n {2}\? for shortcuts/); // the rule layout
 
   type('?');
@@ -114,14 +114,14 @@ test('an interactive session in a real terminal', { skip: !hasTmux && 'tmux is n
   type('%vi');
   send('Enter');
   await waitFor(/editing mode: vi/);
-  type('"xcinder"');
+  type('"x:js"');
   await waitFor(/-- INSERT --/);
   send('Escape');
   await waitUntilGone(/-- INSERT --/); // NORMAL mode shows no label, as in vim
   type('0lx');
-  await waitFor(/> "cinder"/);
+  await waitFor(/> ":js"/);
   send('Enter');
-  await waitFor(/⎿ {2}'cinder'\n/);
+  await waitFor(/⎿ {2}':js'\n/);
 
   // Ctrl+C on an empty prompt asks for a second press
   send('C-c');
@@ -129,5 +129,5 @@ test('an interactive session in a real terminal', { skip: !hasTmux && 'tmux is n
 
   // Ctrl+D leaves
   send('C-d');
-  await waitFor(/goodbye ✦\n(.*\n)*CINDER-EXITED/);
+  await waitFor(/goodbye ✦\n(.*\n)*:JS-EXITED/);
 });

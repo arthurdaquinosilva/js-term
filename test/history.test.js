@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import { HistoryManager } from '../src/history.js';
 
 function file() {
-  return path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'cinder-hist-')), 'history.jsonl');
+  return path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'js-term-hist-')), 'history.jsonl');
 }
 
 test('sessions persist and ranges address them like IPython', () => {

@@ -9,11 +9,11 @@ import { Theme } from '../src/theme.js';
 import { stripAnsi } from '../src/text.js';
 
 const texts = (res) => res?.items.map((i) => i.text) ?? [];
-const at = (src) => complete(src, src.length, { aliases: {}, userVars: () => ({ cinderUserThing: 1 }) });
+const at = (src) => complete(src, src.length, { aliases: {}, userVars: () => ({ jsTermUserThing: 1 }) });
 
 before(() => {
-  globalThis.cinderUserThing = { alpha: 1, beta: () => 2, nested: { deep: true } };
-  globalThis.cinderGreet = function greet(name, times = 1) {
+  globalThis.jsTermUserThing = { alpha: 1, beta: () => 2, nested: { deep: true } };
+  globalThis.jsTermGreet = function greet(name, times = 1) {
     return `hi ${name}`.repeat(times);
   };
   /** Adds two numbers.
@@ -21,30 +21,30 @@ before(() => {
    * @param {number} b
    * @returns {number}
    */
-  globalThis.cinderAdd = function cinderAdd(a, b) {
+  globalThis.jsTermAdd = function jsTermAdd(a, b) {
     return a + b;
   };
 });
 
 after(() => {
-  delete globalThis.cinderUserThing;
-  delete globalThis.cinderGreet;
-  delete globalThis.cinderAdd;
+  delete globalThis.jsTermUserThing;
+  delete globalThis.jsTermGreet;
+  delete globalThis.jsTermAdd;
 });
 
 describe('completion', () => {
   test('global names, your variables first', () => {
-    const res = at('cinderU');
+    const res = at('jsTermU');
     assert.equal(res.start, 0);
-    assert.deepEqual(texts(res), ['cinderUserThing']);
+    assert.deepEqual(texts(res), ['jsTermUserThing']);
     assert.ok(texts(at('JSO')).includes('JSON'));
   });
 
   test('properties along a member chain, without calling anything', () => {
-    assert.deepEqual(texts(at('cinderUserThing.')).slice(0, 3), ['alpha', 'beta', 'nested']);
-    assert.deepEqual(texts(at('cinderUserThing.nested.d')), ['deep']);
-    assert.deepEqual(texts(at('cinderUserThing["nested"].d')), ['deep']);
-    const beta = at('cinderUserThing.b').items[0];
+    assert.deepEqual(texts(at('jsTermUserThing.')).slice(0, 3), ['alpha', 'beta', 'nested']);
+    assert.deepEqual(texts(at('jsTermUserThing.nested.d')), ['deep']);
+    assert.deepEqual(texts(at('jsTermUserThing["nested"].d')), ['deep']);
+    const beta = at('jsTermUserThing.b').items[0];
     assert.equal(beta.kind, 'function');
   });
 
@@ -55,7 +55,7 @@ describe('completion', () => {
 
   test('magic names and file paths for path magics', () => {
     assert.deepEqual(texts(at('%timei')), ['timeit']);
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cinder-comp-'));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'js-term-comp-'));
     fs.writeFileSync(path.join(dir, 'script.js'), '');
     fs.mkdirSync(path.join(dir, 'lib'));
     assert.deepEqual(texts(at(`%run ${dir}/`)), [`${dir}/lib/`, `${dir}/script.js`]);
@@ -68,7 +68,7 @@ describe('completion', () => {
 
   test('nothing inside ordinary strings, comments or after whitespace', () => {
     assert.equal(at('"hello wor'), null);
-    assert.equal(at('// cinderU'), null);
+    assert.equal(at('// jsTermU'), null);
     assert.equal(at('const x = '), null);
   });
 
@@ -86,13 +86,13 @@ describe('signatures', () => {
   });
 
   test('parameters, defaults and inferred types', () => {
-    const info = functionInfo(globalThis.cinderGreet);
+    const info = functionInfo(globalThis.jsTermGreet);
     assert.deepEqual(info.params.map((p) => [p.name, p.type ?? null, p.def ?? null]), [['name', null, null], ['times', 'number', '1']]);
   });
 
   test('JSDoc from a cell gives declared types and a summary', () => {
-    const src = ['/** Adds two numbers.\n * @param {number} a\n * @param {number} b\n * @returns {number}\n */\nfunction cinderAdd(a, b) { return a + b }'];
-    const info = functionInfo(globalThis.cinderAdd, 'cinderAdd', src);
+    const src = ['/** Adds two numbers.\n * @param {number} a\n * @param {number} b\n * @returns {number}\n */\nfunction jsTermAdd(a, b) { return a + b }'];
+    const info = functionInfo(globalThis.jsTermAdd, 'jsTermAdd', src);
     assert.equal(info.returns, 'number');
     assert.equal(info.returnsInferred, false);
     assert.deepEqual(info.params.map((p) => p.type), ['number', 'number']);
@@ -103,7 +103,7 @@ describe('signatures', () => {
     const sig = signatureAt('JSON.stringify(data, null, ', 27);
     assert.equal(sig.index, 2);
     assert.equal(sig.returns, 'string');
-    const typed = signatureAt('cinderGreet("Ada"', 17);
+    const typed = signatureAt('jsTermGreet("Ada"', 17);
     assert.equal(typed.params[0].type, 'string');
     assert.equal(typed.params[0].inferred, true);
   });

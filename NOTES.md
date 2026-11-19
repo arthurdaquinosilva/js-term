@@ -1,10 +1,10 @@
-# cinder — notes for later
+# :js — notes for later
 
 Snapshot from 2026-11-18 (v0.2.0). This is a working list toward a "production grade" 1.0, most important first.
 
 ## State
 
-- ember's JavaScript/TypeScript sibling for Node ≥ 20.12. Plain ES modules with no build step. About 7,800 lines in `src/`, about 1,600 lines of tests (`node --test`). CI runs Ubuntu and macOS on Node 20, 22 and 24 with tmux for terminal tests, `node --check` and a docs-are-current check.
+- :py's JavaScript/TypeScript sibling for Node ≥ 20.12. Plain ES modules with no build step. About 7,800 lines in `src/`, about 1,600 lines of tests (`node --test`). CI runs Ubuntu and macOS on Node 20, 22 and 24 with tmux for terminal tests, `node --check` and a docs-are-current check.
 - Only 2 runtime dependencies (acorn, acorn-walk). Excellent.
 - Docs: features, configuration, magics (generated), releasing.
 - Tests weren't run in this review (no `node_modules` locally). Run `npm ci && npm test` to get a baseline.
@@ -19,14 +19,14 @@ Snapshot from 2026-11-18 (v0.2.0). This is a working list toward a "production g
 
 ## 2. Diagnosability
 
-- [ ] Add `--debug` / `CINDER_LOG`, a crash report file and `cinder --doctor` (Node version, TypeScript support available, terminal capabilities).
-- [ ] Make sure a crash inside cinder's own UI never loses the user's session state or history.
+- [ ] Add `--debug` / `JS_TERM_LOG`, a crash report file and `:js --doctor` (Node version, TypeScript support available, terminal capabilities).
+- [ ] Make sure a crash inside :js's own UI never loses the user's session state or history.
 
 ## 3. Product
 
 - [ ] TypeScript: document what is supported (type stripping vs a full type check), and which Node version is needed for native type stripping.
 - [ ] ESM and CommonJS `require` interop at the prompt, top-level `await` and `import()` of local files: check edge cases and document them.
-- [ ] A "Known limits" section in the README, as in ember.
+- [ ] A "Known limits" section in the README, as in :py.
 
 ## 4. Releases and distribution
 
@@ -41,4 +41,4 @@ Snapshot from 2026-11-18 (v0.2.0). This is a working list toward a "production g
 
 ## Shared with the family
 
-The pitch palette is copied into each repo, and the release, installer, logging and `--doctor` work is the same across all of them. Solve it once in ember and port it here.
+The pitch palette is copied into each repo, and the release, installer, logging and `--doctor` work is the same across all of them. Solve it once in :py and port it here.

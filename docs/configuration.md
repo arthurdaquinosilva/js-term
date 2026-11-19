@@ -4,11 +4,11 @@
 
 | Path | Contents |
 | --- | --- |
-| `~/.config/cinder/config.json` | Settings (this page) |
-| `~/.config/cinder/startup/` | `*.js` / `*.mjs` / `*.cjs` files run at startup, in name order |
-| `~/.local/share/cinder/history.jsonl` | Input and output history, grouped by session |
-| `~/.local/share/cinder/bookmarks.json` | Directory bookmarks from `%bookmark` |
-| `~/.local/share/cinder/store/` | Variables saved with `%store` |
+| `~/.config/js-term/config.json` | Settings (this page) |
+| `~/.config/js-term/startup/` | `*.js` / `*.mjs` / `*.cjs` files run at startup, in name order |
+| `~/.local/share/js-term/history.jsonl` | Input and output history, grouped by session |
+| `~/.local/share/js-term/bookmarks.json` | Directory bookmarks from `%bookmark` |
+| `~/.local/share/js-term/store/` | Variables saved with `%store` |
 
 `XDG_CONFIG_HOME` and `XDG_DATA_HOME` are respected.
 
@@ -37,7 +37,7 @@ Every setting is optional. This example shows each one with its default (`//` co
 }
 ```
 
-Unknown or invalid keys are reported as a warning when cinder starts; they never stop it from starting.
+Unknown or invalid keys are reported as a warning when :js starts; they never stop it from starting.
 
 ### Changing settings in a session
 
@@ -50,20 +50,20 @@ Unknown or invalid keys are reported as a warning when cinder starts; they never
 
 ## Themes
 
-One palette, **pitch**, shared by the input bar, the cell chrome, syntax highlighting and printed values: cool blue/violet hues on a pitch-black terminal, the same palette as ember, shtick, flare and lore, with cinder's own red accent. Backgrounds stay transparent, so the terminal's own black shows through.
+One palette, **pitch**, shared by the input bar, the cell chrome, syntax highlighting and printed values: cool blue/violet hues on a pitch-black terminal, the same palette as :py, :sh, :http and :docs, with :js's own red accent. Backgrounds stay transparent, so the terminal's own black shows through.
 
-cinder uses 24-bit color when the terminal supports it and falls back to the nearest 256 colors otherwise. `NO_COLOR` turns colors off.
+:js uses 24-bit color when the terminal supports it and falls back to the nearest 256 colors otherwise. `NO_COLOR` turns colors off.
 
 ## Profiles
 
-`cinder --profile work` keeps a separate configuration, startup directory and history under `~/.config/cinder/profiles/work/` and `~/.local/share/cinder/profiles/work/`.
+`:js --profile work` keeps a separate configuration, startup directory and history under `~/.config/js-term/profiles/work/` and `~/.local/share/js-term/profiles/work/`.
 
 ## Startup files
 
 Files in the startup directory run before the first prompt, like `%run`: their top-level variables and functions are available in your session. Use them for helpers you always want:
 
 ```js
-// ~/.config/cinder/startup/10-helpers.js
+// ~/.config/js-term/startup/10-helpers.js
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const json = (value) => console.log(JSON.stringify(value, null, 2));
 ```
@@ -74,7 +74,7 @@ Errors in startup code are reported and skipped. `--no-startup` skips startup fi
 
 | Option | |
 | --- | --- |
-| `cinder file.js [args…]` | Run a file and exit (`-i` to stay interactive afterwards) |
+| `:js file.js [args…]` | Run a file and exit (`-i` to stay interactive afterwards) |
 | `-e`, `--eval CODE` | Run code and exit |
 | `-p`, `--print CODE` | Run code, print the result and exit |
 | `-` | Read code from stdin (also when stdin isn't a terminal) |

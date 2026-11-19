@@ -10,7 +10,7 @@ export const XMODES = ['minimal', 'plain', 'context', 'verbose'];
 /** Every setting with its default, and a check for values set from config.json or %config. */
 export const SETTINGS = {
   theme: { default: 'pitch', choices: Object.keys(PALETTES), doc: 'color theme' },
-  layout: { default: 'rule', choices: ['rule', 'block', 'box'], doc: 'rule (input between two rules, querky-style), block (full-width input bar) or box (rounded box)' },
+  layout: { default: 'rule', choices: ['rule', 'block', 'box'], doc: 'rule (input between two rules, :sql-style), block (full-width input bar) or box (rounded box)' },
   typescript: { default: 'auto', choices: ['auto', 'always', 'off'], doc: 'TypeScript in cells: auto (when the code isn\'t JavaScript), always, or off' },
   editingMode: { default: 'emacs', choices: ['emacs', 'vi'], doc: 'key bindings for the input' },
   automagic: { default: true, type: 'boolean', doc: 'run magics without the % prefix (cd .., pwd, ls) when the line isn\'t JavaScript' },
@@ -76,12 +76,26 @@ function xdg(envName, fallback) {
   return dir && path.isAbsolute(dir) ? dir : path.join(os.homedir(), fallback);
 }
 
+// :js used to be called cinder: copy its settings and history over once, unless the new folder already
+// has something in it. The old folder is left alone.
+function migrate(oldDir, newDir) {
+  try {
+    if (!fs.statSync(oldDir).isDirectory()) return;
+    if (fs.existsSync(newDir) && fs.readdirSync(newDir).length) return;
+    fs.cpSync(oldDir, newDir, { recursive: true, verbatimSymlinks: true });
+  } catch {
+    // nothing to migrate, or it can't be read: start fresh
+  }
+}
+
 export class Profile {
   constructor(name = 'default') {
     if (!/^[\w.-]+$/.test(name)) throw new Error(`invalid profile name ${JSON.stringify(name)}`);
     this.name = name;
-    const config = path.join(xdg('XDG_CONFIG_HOME', '.config'), 'cinder');
-    const data = path.join(xdg('XDG_DATA_HOME', '.local/share'), 'cinder');
+    const config = path.join(xdg('XDG_CONFIG_HOME', '.config'), 'js-term');
+    const data = path.join(xdg('XDG_DATA_HOME', '.local/share'), 'js-term');
+    migrate(path.join(xdg('XDG_CONFIG_HOME', '.config'), 'cinder'), config);
+    migrate(path.join(xdg('XDG_DATA_HOME', '.local/share'), 'cinder'), data);
     this.configDir = name === 'default' ? config : path.join(config, 'profiles', name);
     this.dataDir = name === 'default' ? data : path.join(data, 'profiles', name);
   }
@@ -107,7 +121,7 @@ export class Profile {
   }
 }
 
-/** Read config.json. Problems become warnings; they never stop cinder from starting. */
+/** Read config.json. Problems become warnings; they never stop :js from starting. */
 export function loadSettings(profile) {
   const warnings = [];
   const settings = new Settings();

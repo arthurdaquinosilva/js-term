@@ -91,9 +91,9 @@ export class Repl {
     if (this.box) return this.boxBanner();
     const t = this.theme;
     const out = [''];
-    const mark = wordmark(t, 'CINDER.JS');
+    const mark = wordmark(t, ':JS');
     if (Math.max(...mark.map(textWidth)) < this.cols) out.push(...mark);
-    else out.push('  ' + t.paint('brand.bold', 'CINDER.JS'));
+    else out.push('  ' + t.paint('brand.bold', ':JS'));
     out.push('', '  ' + t.paint('faint', `v${VERSION}`), '');
     const rows = [['Node', process.version]];
     const pkg = packageName(process.cwd());
@@ -107,10 +107,10 @@ export class Repl {
     this.write(out.join('\n'));
   }
 
-  /** The box layout's compact banner: `✦ cinder v0.2.0`, environment and a few hints. */
+  /** The box layout's compact banner: `✦ :js v0.2.0`, environment and a few hints. */
   boxBanner() {
     const t = this.theme;
-    const name = [...'cinder'].map((c, i) => t.paint(i < 2 ? 'brand.bold' : 'brand', c)).join('');
+    const name = [...':js'].map((c, i) => t.paint(i < 1 ? 'brand.bold' : 'brand', c)).join('');
     const sep = t.paint('faint', '  ·  ');
     const pkg = packageName(process.cwd());
     const env = [t.paint('faint', 'node ') + t.paint('muted', process.version)];
@@ -623,7 +623,7 @@ export class Repl {
   // ── editor, suspend, resize ───────────────────────────────────────────────
 
   openEditor() {
-    const file = path.join(os.tmpdir(), `cinder-${process.pid}.js`);
+    const file = path.join(os.tmpdir(), `js-term-${process.pid}.js`);
     fs.writeFileSync(file, this.buffer.text);
     this.erase();
     this.detach();
@@ -884,7 +884,7 @@ export class Repl {
 
   // ── rule layout pieces ────────────────────────────────────────────────────
 
-  /** Completions as a plain list under the prompt, as in querky: the current one in the accent colour. */
+  /** Completions as a plain list under the prompt, as in :sql: the current one in the accent colour. */
   inlineMenu() {
     const t = this.theme;
     const m = this.menu;

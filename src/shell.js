@@ -98,7 +98,7 @@ export class Shell {
     const g = globalThis;
     const shell = this;
     const define = (name, value) => Object.defineProperty(g, name, { value, writable: true, configurable: true, enumerable: false });
-    define('__cinder__', {
+    define('__js_term__', {
       magic: (name, args) => shell.runMagic(name, args),
       show: (value) => {
         if (value !== undefined) shell.print(shell.renderResult(value));
@@ -116,7 +116,7 @@ export class Shell {
         get,
         set(value) {
           Object.defineProperty(g, name, { value, writable: true, configurable: true, enumerable: false });
-          shell.print(shell.theme.paint('faint', `(${name} is yours now; cinder stops updating it)`));
+          shell.print(shell.theme.paint('faint', `(${name} is yours now; :js stops updating it)`));
         },
         configurable: true,
         enumerable: false,
@@ -141,22 +141,22 @@ export class Shell {
       }
     }
 
-    // process.exit() in a cell ends cinder cleanly instead of killing it mid-render.
-    if (!process.exit.__cinder) {
+    // process.exit() in a cell ends :js cleanly instead of killing it mid-render.
+    if (!process.exit.__js_term) {
       const realExit = process.exit.bind(process);
       const exit = (code) => {
         if (shell.running) throw new ExitRequest(code ?? process.exitCode ?? 0);
         shell.onExitRequest?.(code ?? 0);
         realExit(code);
       };
-      exit.__cinder = realExit;
+      exit.__js_term = realExit;
       process.exit = exit;
     }
     this.initialNames = new Set(Object.getOwnPropertyNames(g));
   }
 
   updateRequire() {
-    this.require = createRequire(path.join(process.cwd(), '[cinder]'));
+    this.require = createRequire(path.join(process.cwd(), '[:js]'));
     Object.defineProperty(globalThis, 'require', { value: this.require, writable: true, configurable: true, enumerable: false });
   }
 

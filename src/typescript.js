@@ -35,7 +35,7 @@ export function typeScriptMode() {
 /** The typescript package from the current project, if it has one. */
 function typescriptPackage() {
   try {
-    return createRequire(path.join(process.cwd(), '[cinder]'))('typescript');
+    return createRequire(path.join(process.cwd(), '[:js]'))('typescript');
   } catch {
     return null;
   }

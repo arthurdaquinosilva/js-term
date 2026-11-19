@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Record docs/assets/cover.svg (the start screen) and docs/assets/demo.svg (a short session) from a real
-// cinder session: it runs in an isolated tmux server, the screen is captured with its colors, and the
+// :js session: it runs in an isolated tmux server, the screen is captured with its colors, and the
 // ANSI output is converted to SVG. Needs tmux.
 
 import { execFileSync, spawnSync } from 'node:child_process';
@@ -10,9 +10,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const socket = `cinder-shot-${process.pid}`;
+const socket = `js-term-shot-${process.pid}`;
 const COLS = 100;
-const home = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'cinder-shot-')));
+const home = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'js-term-shot-')));
 const demoDir = path.join(home, 'my-app');
 fs.mkdirSync(demoDir);
 fs.writeFileSync(path.join(demoDir, 'package.json'), JSON.stringify({ name: 'my-app', version: '1.0.0' }));
@@ -177,7 +177,7 @@ function toSVG(ansi, title) {
 async function main() {
   if (spawnSync('tmux', ['-V']).status !== 0) throw new Error('tmux is needed to record screenshots');
   const env = ['-e', `XDG_DATA_HOME=${home}/data`, '-e', `XDG_CONFIG_HOME=${home}/config`, '-e', 'COLORTERM=truecolor', '-e', `HOME=${home}`];
-  const cmd = `/bin/sh -c 'trap : INT; cd "${demoDir}" && "${process.execPath}" "${root}/bin/cinder.js"; sleep 30'`;
+  const cmd = `/bin/sh -c 'trap : INT; cd "${demoDir}" && "${process.execPath}" "${root}/bin/js-term.js"; sleep 30'`;
 
   // cover: the start screen
   tmux('new-session', '-d', '-s', 'shot', '-x', String(COLS), '-y', '24', ...env, cmd);
@@ -185,7 +185,7 @@ async function main() {
   await sleep(300);
   const assets = path.join(root, 'docs', 'assets');
   fs.mkdirSync(assets, { recursive: true });
-  fs.writeFileSync(path.join(assets, 'cover.svg'), toSVG(tmux('capture-pane', '-p', '-e', '-N', '-t', 'shot'), 'cinder'));
+  fs.writeFileSync(path.join(assets, 'cover.svg'), toSVG(tmux('capture-pane', '-p', '-e', '-N', '-t', 'shot'), ':js'));
   tmux('kill-server');
 
   // demo: a few cells and a signature hint
@@ -196,12 +196,12 @@ async function main() {
   await type('const langs = [{ name: "js", year: 1995 }, { name: "ts", year: 2012 }, { name: "go", year: 2009 }]');
   await type('langs.toSorted((a, b) => a.year - b.year).map((l) => l.name)');
   await type('import { createHash } from "node:crypto"');
-  await type('createHash("sha256").update("cinder").digest("hex").slice(0, 12)');
+  await type('createHash("sha256").update(":js").digest("hex").slice(0, 12)');
   await type('%timeit JSON.parse(JSON.stringify(langs))');
   await type('function greet(name, times = 1) { return `hi ${name}! `.repeat(times) }');
   await type('greet("Ada", ', { enter: false });
   await sleep(400);
-  fs.writeFileSync(path.join(assets, 'demo.svg'), toSVG(tmux('capture-pane', '-p', '-e', '-N', '-t', 'shot'), 'cinder — ~/my-app'));
+  fs.writeFileSync(path.join(assets, 'demo.svg'), toSVG(tmux('capture-pane', '-p', '-e', '-N', '-t', 'shot'), ':js — ~/my-app'));
   tmux('kill-server');
   console.log('wrote docs/assets/cover.svg and docs/assets/demo.svg');
 }

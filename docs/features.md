@@ -24,7 +24,7 @@ Each cell you run becomes a block:
 - **Auto-indent** after an opening bracket or `=>`; typing `}`, `)` or `]` at the start of a line dedents it. Backspace in indentation removes a whole level; Shift+Tab dedents.
 - **Grey suggestions** come from your history; → (or Ctrl+E / Ctrl+F at the end) accepts them. ↑/↓ walk history entries that start with what you've typed; Ctrl+R searches all of it.
 - **Pasting** code copied from a Node REPL session works: `> ` / `... ` prompts are removed and the output lines between them dropped.
-- **Ctrl+O** (or F2) opens the cell in `$VISUAL` / `$EDITOR`. Ctrl+Z suspends cinder; `fg` brings it back.
+- **Ctrl+O** (or F2) opens the cell in `$VISUAL` / `$EDITOR`. Ctrl+Z suspends :js; `fg` brings it back.
 - Emacs keys: Ctrl+A/E, Alt+B/F (or Alt/Ctrl+arrows), Ctrl+W, Alt+D, Ctrl+K, Ctrl+U, Ctrl+Y, and Ctrl+_ to undo.
 - `\alpha` Tab → `α`: Greek letters (valid in JavaScript names) and common symbols (`\sum` ∑, `\to` →, `\le` ≤…).
 
@@ -46,7 +46,7 @@ In insert mode the usual editing keys (Tab completion, Ctrl+R history search, Ct
 
 ### Layouts
 
-`rule` (the default) is querky's look: the input between two horizontal rules and a one-line footer, with `? for shortcuts` (or the vi mode, or the signature of the call you're typing) on the left and `In [N]` and the environment on the right. Press `?` on an empty prompt for the shortcuts. Completions are a plain list under the prompt, and cell output hangs under a `⎿` marker. Ctrl+C clears the input; on an empty prompt, press it twice to exit. `block` is the full-width input bar with the key bar and mode line. `box` is ember's classic look: the input in a rounded box titled `In [N]`, and one status line with the environment on the left and key hints on the right. Switch with `--layout box`, `%layout box` or `"layout": "box"`.
+`rule` (the default) is :sql's look: the input between two horizontal rules and a one-line footer, with `? for shortcuts` (or the vi mode, or the signature of the call you're typing) on the left and `In [N]` and the environment on the right. Press `?` on an empty prompt for the shortcuts. Completions are a plain list under the prompt, and cell output hangs under a `⎿` marker. Ctrl+C clears the input; on an empty prompt, press it twice to exit. `block` is the full-width input bar with the key bar and mode line. `box` is :py's classic look: the input in a rounded box titled `In [N]`, and one status line with the environment on the left and key hints on the right. Switch with `--layout box`, `%layout box` or `"layout": "box"`.
 
 ### Signature hints
 
@@ -56,7 +56,7 @@ While you type inside a call, its signature replaces the key bar, with the curre
 ƒ greet(name: string, times: number = 1) → string
 ```
 
-Parameters come from the function's own source (defaults, rest parameters, destructuring). Types come from, in order: a JSDoc comment above the function in one of your cells (`@param {number} a`, `@returns {string}`); the value you're passing (`"Ada"` → `string`); the parameter's default; and for return types, the function's body (`Promise` for async functions, `Generator` for generators, `undefined` when it never returns a value, simple literal returns). Inferred types are shown in muted italics. Built-ins such as `JSON.stringify`, `Math.max` and the common array, string, `Map` and `Promise` methods have no JavaScript source, so their signatures come from a table in cinder. Long signatures collapse to fit: defaults go first, then parameters far from the cursor.
+Parameters come from the function's own source (defaults, rest parameters, destructuring). Types come from, in order: a JSDoc comment above the function in one of your cells (`@param {number} a`, `@returns {string}`); the value you're passing (`"Ada"` → `string`); the parameter's default; and for return types, the function's body (`Promise` for async functions, `Generator` for generators, `undefined` when it never returns a value, simple literal returns). Inferred types are shown in muted italics. Built-ins such as `JSON.stringify`, `Math.max` and the common array, string, `Map` and `Promise` methods have no JavaScript source, so their signatures come from a table in :js. Long signatures collapse to fit: defaults go first, then parameters far from the cursor.
 
 ## Input syntax
 
@@ -74,7 +74,7 @@ Parameters come from the function's own source (defaults, rest parameters, destr
 | `import … from "…"` | Import statements work in cells (they're loaded with `import()`); `export` is ignored so module code can be pasted |
 | `exit`, `.exit`, Ctrl+D | Leave |
 
-Variables kept for you: `_` (the last result), `_N` and `Out` (results), `_iN` and `In` (inputs), `_error` (the last error). Assign to `_` or `_error` yourself and cinder stops updating it, as Node's REPL does.
+Variables kept for you: `_` (the last result), `_N` and `Out` (results), `_iN` and `In` (inputs), `_error` (the last error). Assign to `_` or `_error` yourself and :js stops updating it, as Node's REPL does.
 
 Built-in modules are globals, loaded the first time you use them: `fs.readdirSync(".")`, `path.join(…)`, `os.cpus()`. `require` is there too, resolving from the current directory.
 
@@ -86,7 +86,7 @@ Cells run in Node's main JavaScript context, the same way Node's own REPL does, 
 - **Top-level await.** Cells that use `await` or `import` at the top level run inside an async function; their declarations are hoisted to globals and the value of the last expression is returned. Line numbers in errors stay exact.
 - **`{a: 1}` alone is an object**, not a block.
 - **The last expression is the result.** Statements (declarations, loops, `if`) show no result. The `interactivity` setting changes this: `all` shows every top-level expression, `last_expr_or_assign` also shows `x` after `const x = …`, `none` shows nothing.
-- **`process.exit()`** in a cell ends cinder cleanly; in a file run with `%run` it only ends the file.
+- **`process.exit()`** in a cell ends :js cleanly; in a file run with `%run` it only ends the file.
 - **Ctrl+C** stops a synchronous loop right away. For `await`, it stops waiting: the cell ends as interrupted, but timers and promises it started keep running in the background.
 
 ## TypeScript
@@ -104,9 +104,9 @@ Type TypeScript straight into cells — types, interfaces, type aliases, generic
 │ 'ada'
 ```
 
-- **How it runs.** A cell that is valid JavaScript runs as JavaScript. Otherwise it is compiled as TypeScript with Node's built-in compiler (`module.stripTypeScriptTypes`, Node 22.13+). Plain type syntax is blanked out in place, so error lines and columns are exact; enums, namespaces and parameter properties need real code generation, and a source map puts their errors back on your lines. Types are not *checked* — like `tsx` or Node itself, cinder runs your code without a type checker (run `tsc --noEmit` for that).
+- **How it runs.** A cell that is valid JavaScript runs as JavaScript. Otherwise it is compiled as TypeScript with Node's built-in compiler (`module.stripTypeScriptTypes`, Node 22.13+). Plain type syntax is blanked out in place, so error lines and columns are exact; enums, namespaces and parameter properties need real code generation, and a source map puts their errors back on your lines. Types are not *checked* — like `tsx` or Node itself, :js runs your code without a type checker (run `tsc --noEmit` for that).
 - **Files.** `%run file.ts` (and `.mts`, `.cts`) compiles the file first. `import … from "./model.ts"` and `require("./legacy.cts")` in cells compile imported TypeScript too, enums included, and stack traces point at the `.ts` lines (Node 22.15+).
-- **Older Node.** Without Node's compiler, cinder uses the `typescript` package when the project has it (`npm i -D typescript`).
+- **Older Node.** Without Node's compiler, :js uses the `typescript` package when the project has it (`npm i -D typescript`).
 - **The `typescript` setting.** `auto` (the default) as above; `always` compiles every cell as TypeScript — for code where the two languages disagree, like `f<T>(x)`, which JavaScript reads as comparisons; `off` never does.
 - **Help while typing.** Enter keeps an unfinished `interface User {` open, TypeScript keywords and type names are highlighted, and signature hints show the types you declared — `ƒ pick<T, K extends keyof T>(obj: T, keys: K[]) → Pick<T, K>`.
 
@@ -140,7 +140,7 @@ Results are printed with Node's `util.inspect`, colored with the theme, as deep 
 ╰─ ✗ TypeError · 686.1µs
 ```
 
-Frames inside Node and cinder are hidden. Extra fields on the error (`code: 'ENOENT'`) are listed under the message, and `cause` chains and `AggregateError` members are shown below the frames.
+Frames inside Node and :js are hidden. Extra fields on the error (`code: 'ENOENT'`) are listed under the message, and `cause` chains and `AggregateError` members are shown below the frames.
 
 `%xmode` chooses the format: `minimal` (one line), `plain` (Node's standard stack), `context` (the default, above) or `verbose` (every frame, including Node's internals and packages, with source around each). `%tb` shows the last error again, optionally in another format: `%tb verbose`.
 
@@ -177,7 +177,7 @@ Range syntax: `4`, `4-6` (inclusive), `4:6` (end exclusive), `4-` (to the end), 
 ```js
 %macro setup 1-4      // typing `setup` now runs lines 1–4
 %store data helpers   // keep variables across sessions (%store -r to restore, "storeAutorestore": true to do it at startup)
-%logstart -o -t       // log every cell, with results and timestamps, to cinder_log.js
+%logstart -o -t       // log every cell, with results and timestamps, to js_term_log.js
 %paste                // run the code on the clipboard; %cpaste reads a pasted block until --
 ```
 
@@ -204,7 +204,7 @@ Range syntax: `4`, `4-6` (inclusive), `4:6` (end exclusive), `4-` (to the end), 
 ## Completion
 
 - Global names, your variables first, with an icon for each kind (ƒ function, ◇ class, ▣ module, ● value, ◦ property, ⌘ keyword).
-- Properties after `.`, from the live object — reached through plain member chains like `a.b["c"].d`, which cinder looks up without calling anything. Literals work too: `"abc".` and `[1, 2].`.
+- Properties after `.`, from the live object — reached through plain member chains like `a.b["c"].d`, which :js looks up without calling anything. Literals work too: `"abc".` and `[1, 2].`.
 - Keys inside brackets: `config["da` → `config["database"]`.
 - Module names inside `require("` and `import … from "`: built-ins and the packages in `node_modules`.
 - File paths in strings that look like paths (`"./`), after `%run`, `%cd`, `%load` and friends, and in `!` commands.

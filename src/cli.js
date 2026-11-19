@@ -11,14 +11,14 @@ import { restoreStore } from './magics/history.js';
 import { ExitRequest, Shell } from './shell.js';
 import { PALETTES } from './theme.js';
 
-const HELP = `cinder — a modern interactive JavaScript shell for Node
+const HELP = `:js — a modern interactive JavaScript shell for Node
 
 usage:
-  cinder                          interactive
-  cinder file.js [args…]          run a file (-i to stay interactive afterwards)
-  cinder -e "code"                run code        cinder -p "expr"   print its value
-  cinder -  <  file.js            run code from stdin
-  cinder --profile work --vi --layout box --no-startup
+  :js                          interactive
+  :js file.js [args…]          run a file (-i to stay interactive afterwards)
+  :js -e "code"                run code        :js -p "expr"   print its value
+  :js -  <  file.js            run code from stdin
+  :js --profile work --vi --layout box --no-startup
 
 options:
   -e, --eval CODE      run code and exit
@@ -26,14 +26,14 @@ options:
   -i, --interactive    stay interactive after -e/-p/file
   --profile NAME       use a named profile (separate config, startup files and history)
   --theme NAME         color theme: ${Object.keys(PALETTES).join(', ')}
-  --layout NAME        rule (default, querky-style), block (full-width input bar) or box (rounded box)
+  --layout NAME        rule (default, :sql-style), block (full-width input bar) or box (rounded box)
   --vi                 vi key bindings
   --no-startup         skip startup files and execLines
   --no-history         don't read or write the history file
   -v, --version        print the version
   -h, --help           this help
 
-inside cinder, %help lists keys, syntax and magics.`;
+inside :js, %help lists keys, syntax and magics.`;
 
 function version() {
   return JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
@@ -101,7 +101,7 @@ export async function main(argv = process.argv.slice(2)) {
       },
     });
   } catch (e) {
-    process.stderr.write(`cinder: ${e.message}\n\n${HELP}\n`);
+    process.stderr.write(`:js: ${e.message}\n\n${HELP}\n`);
     return 2;
   }
   const o = opts.values;
@@ -110,7 +110,7 @@ export async function main(argv = process.argv.slice(2)) {
     return 0;
   }
   if (o.version) {
-    process.stdout.write(`cinder ${version()} (node ${process.version})\n`);
+    process.stdout.write(`:js ${version()} (node ${process.version})\n`);
     return 0;
   }
 
@@ -118,7 +118,7 @@ export async function main(argv = process.argv.slice(2)) {
   try {
     profile = new Profile(o.profile ?? 'default');
   } catch (e) {
-    process.stderr.write(`cinder: ${e.message}\n`);
+    process.stderr.write(`:js: ${e.message}\n`);
     return 2;
   }
   const { settings, warnings } = loadSettings(profile);
@@ -126,7 +126,7 @@ export async function main(argv = process.argv.slice(2)) {
     if (o.theme) settings.theme = Settings.validate('theme', o.theme);
     if (o.layout) settings.layout = Settings.validate('layout', o.layout);
   } catch (e) {
-    process.stderr.write(`cinder: ${e.message}\n`);
+    process.stderr.write(`:js: ${e.message}\n`);
     return 2;
   }
   if (o.vi) settings.editingMode = 'vi';

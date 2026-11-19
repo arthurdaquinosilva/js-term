@@ -1,6 +1,6 @@
 # Releasing
 
-cinder is published only on GitHub — it isn't on npm. People install it with `install.sh`, which downloads the source archive of a branch or tag from GitHub and runs `npm ci --omit=dev` in it.
+:js is published only on GitHub — it isn't on npm. People install it with `install.sh`, which downloads the source archive of a branch or tag from GitHub and runs `npm ci --omit=dev` in it.
 
 ## Each release
 
@@ -16,7 +16,7 @@ cinder is published only on GitHub — it isn't on npm. People install it with `
 The tag is what `install.sh` installs when asked for it:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/cinder/main/install.sh | CINDER_VERSION=v0.1.0 sh
+curl -fsSL https://raw.githubusercontent.com/arthurdaquinosilva/js-term/main/install.sh | JS_TERM_VERSION=v0.1.0 sh
 ```
 
-`install.sh` is served straight from `main` and installs `main` unless `CINDER_VERSION` is set, so it needs no change per release.
+`install.sh` is served straight from `main` and installs `main` unless `JS_TERM_VERSION` is set, so it needs no change per release.

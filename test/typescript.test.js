@@ -12,7 +12,7 @@ import { runCells } from './helpers.js';
 // Node's own TypeScript compiler arrived in 22.13; module hooks for imported .ts files in 22.15.
 const compiler = typeof module.stripTypeScriptTypes === 'function' ? false : 'needs Node 22.13+';
 const hooks = typeof module.registerHooks === 'function' && !compiler ? false : 'needs Node 22.15+';
-const tmp = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'cinder-ts-')));
+const tmp = () => fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'js-term-ts-')));
 
 describe('TypeScript in cells', { skip: compiler }, () => {
   test('types, interfaces, generics and `as` are erased; positions stay exact', () => {

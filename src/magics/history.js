@@ -140,7 +140,7 @@ lineMagic(['macro'], {
 
 // ── %store ───────────────────────────────────────────────────────────────────
 
-const FN_TAG = '__cinder_function__';
+const FN_TAG = '__js_term_function__';
 
 function storeDir(shell) {
   if (!shell.profile) throw new MagicError('%store needs a profile directory (it is off with --no-history in tests)');
@@ -149,13 +149,13 @@ function storeDir(shell) {
 
 function encode(value) {
   if (typeof value === 'function') return { [FN_TAG]: Function.prototype.toString.call(value) };
-  if (value instanceof Macro) return { __cinder_macro__: value.source };
+  if (value instanceof Macro) return { __js_term_macro__: value.source };
   return value;
 }
 
 function decode(value) {
   if (value && typeof value === 'object' && FN_TAG in value) return vm.runInThisContext(`(${value[FN_TAG]})`);
-  if (value && typeof value === 'object' && '__cinder_macro__' in value) return new Macro(value.__cinder_macro__);
+  if (value && typeof value === 'object' && '__js_term_macro__' in value) return new Macro(value.__js_term_macro__);
   return value;
 }
 
@@ -250,7 +250,7 @@ export class Logger {
     this.output = output;
     this.timestamps = timestamps;
     this.active = true;
-    fs.appendFileSync(file, `// cinder log started ${new Date().toISOString()}\n`);
+    fs.appendFileSync(file, `// :js log started ${new Date().toISOString()}\n`);
   }
 
   logInput(source) {
@@ -266,13 +266,13 @@ export class Logger {
 }
 
 lineMagic(['logstart'], {
-  doc: 'Log every cell you run to a file (default cinder_log.js, appended). -o also logs results as comments, -t adds timestamps. %logoff / %logon pause and resume, %logstate shows it, %logstop ends it.',
+  doc: 'Log every cell you run to a file (default js_term_log.js, appended). -o also logs results as comments, -t adds timestamps. %logoff / %logon pause and resume, %logstate shows it, %logstop ends it.',
   usage: '[-o] [-t] [file]',
   category,
 }, (shell, args) => {
   const { opts, rest } = parseArgs(args, { o: 'bool', t: 'bool' });
   if (shell.logger) throw new MagicError(`already logging to ${shell.logger.file} — %logstop first`);
-  const file = path.resolve(rest[0] ?? 'cinder_log.js');
+  const file = path.resolve(rest[0] ?? 'js_term_log.js');
   shell.logger = new Logger(file, { output: opts.o, timestamps: opts.t });
   shell.print(shell.theme.paint('muted', `logging to ${file}${opts.o ? ' (with results)' : ''}`));
 });
